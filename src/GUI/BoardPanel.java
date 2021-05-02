@@ -1,11 +1,15 @@
 package GUI;
 
+import AI.CustomPair;
+import AI.TicTacToeAI;
 import Game.GameBoard;
 import Game.GameStatus;
+import org.ietf.jgss.GSSContext;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 
 public class BoardPanel extends JPanel {
 
@@ -14,7 +18,7 @@ public class BoardPanel extends JPanel {
     private JButton button10, button11, button12;
     private JButton button20, button21, button22;
     private boolean isPlayer1 = true;
-
+    private static boolean isSinglePlayer = false;
 
     BoardPanel(){
         this.setBackground(Color.BLUE);
@@ -79,7 +83,9 @@ public class BoardPanel extends JPanel {
             button.setEnabled(false);
             button.setText("x");
             GameBoard.getInstance().setGameBoard(row, column, "x");
-            this.isPlayer1 = false;
+            if (isSinglePlayer){
+                this.isPlayer1 = false;
+            }
         }else {
             button.setEnabled(false);
             button.setText("o");
@@ -88,6 +94,15 @@ public class BoardPanel extends JPanel {
         }
 
         String finalMessage;
+//        CustomPair customPair = TicTacToeAI.bestMove();
+
+        if (GameBoard.getInstance().resultsOfGame().equals(GameStatus.ONGOING) && !isSinglePlayer){
+            CustomPair customPair = TicTacToeAI.bestMove();
+            JButton findButton = this.findButton(customPair.getRow(), customPair.getColumn());
+            findButton.setEnabled(false);
+            findButton.setText("o");
+            GameBoard.getInstance().setGameBoard(customPair.getRow(), customPair.getColumn(), "o");
+        }
 
         if(GameBoard.getInstance().resultsOfGame().equals(GameStatus.PLAYER1WIN)){
             finalMessage = "winner is player1";
@@ -100,6 +115,14 @@ public class BoardPanel extends JPanel {
             this.endGameButtonAction(finalMessage);
         }
 
+//        if (GameBoard.getInstance().resultsOfGame().equals(GameStatus.ONGOING) && !isSinglePlayer){
+//            JButton findButton = this.findButton(TicTacToeAI.bestMove().getRow(), TicTacToeAI.bestMove().getColumn());
+//            findButton.setEnabled(false);
+//            findButton.setText("o");
+//            GameBoard.getInstance().setGameBoard(TicTacToeAI.bestMove().getRow(), TicTacToeAI.bestMove().getColumn(), "o");
+//        }
+
+        System.out.println(Arrays.deepToString(GameBoard.getInstance().getGameBoard()));
     }
 
     private void endGameButtonAction(String finalMessage){
@@ -114,4 +137,30 @@ public class BoardPanel extends JPanel {
         }
     }
 
+    private JButton findButton(int row, int column){
+        if (row == 0 && column == 0){
+            return button00;
+        }else if (row == 0 && column == 1){
+            return button01;
+        }else if (row == 0 && column == 2){
+            return button02;
+        }else if (row == 1 && column == 0){
+            return button10;
+        }else if (row == 1 && column == 1){
+            return button11;
+        }else if (row == 1 && column == 2){
+            return button12;
+        }else if (row == 2 && column == 0){
+            return button20;
+        }else if (row == 2 && column == 1){
+            return button21;
+        }else if (row == 2 && column == 2){
+            return button22;
+        }
+        return null;
+    }
+
+    public static void setIsSinglePlayer(boolean isSingle){
+        isSinglePlayer = isSingle;
+    }
 }
