@@ -19,6 +19,8 @@ public class BoardPanel extends JPanel {
     private JButton button20, button21, button22;
     private boolean isPlayer1 = true;
     private static boolean isSinglePlayer = false;
+    private final ImageIcon singX = new ImageIcon("src\\Graphics\\signX.png");
+    private final ImageIcon singO = new ImageIcon("src\\Graphics\\signO.png");
 
     BoardPanel(){
         this.setBackground(Color.BLUE);
@@ -81,14 +83,16 @@ public class BoardPanel extends JPanel {
     private void editButton(JButton button, int row, int column, boolean isPlayer1){
         if (isPlayer1){
             button.setEnabled(false);
-            button.setText("x");
+//            button.setText("x");
+            button.setIcon(singX);
             GameBoard.getInstance().setGameBoard(row, column, "x");
             if (isSinglePlayer){
                 this.isPlayer1 = false;
             }
         }else {
             button.setEnabled(false);
-            button.setText("o");
+//            button.setText("o");
+            button.setIcon(singO);
             GameBoard.getInstance().setGameBoard(row, column, "o");
             this.isPlayer1 = true;
         }
@@ -100,7 +104,8 @@ public class BoardPanel extends JPanel {
             CustomPair customPair = TicTacToeAI.bestMove();
             JButton findButton = this.findButton(customPair.getRow(), customPair.getColumn());
             findButton.setEnabled(false);
-            findButton.setText("o");
+//            findButton.setText("o");
+            findButton.setIcon(singO);
             GameBoard.getInstance().setGameBoard(customPair.getRow(), customPair.getColumn(), "o");
         }
 

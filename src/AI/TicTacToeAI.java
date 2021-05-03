@@ -53,8 +53,8 @@ public class TicTacToeAI {
         if (!gameBoard.resultsOfGame().equals(GameStatus.ONGOING)) {
 //            System.out.println("!gameBoard.resultsOfGame().equals(GameStatus.ONGOING)");
             return switch (gameBoard.resultsOfGame()) {
-                case PLAYER1WIN -> 10;
-                case PLAYER2WIN -> -10;
+                case PLAYER1WIN -> 100;
+                case PLAYER2WIN -> -100;
                 case TIE -> 0;
                 default -> throw new IllegalStateException("Unexpected value: " + gameBoard.resultsOfGame());
             };
