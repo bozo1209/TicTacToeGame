@@ -4,12 +4,18 @@ import AI.CustomPair;
 import AI.TicTacToeAI;
 import Game.GameBoard;
 import Game.GameStatus;
+import Main.TicTacToeMain;
 import org.ietf.jgss.GSSContext;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class BoardPanel extends JPanel {
 
@@ -19,8 +25,57 @@ public class BoardPanel extends JPanel {
     private JButton button20, button21, button22;
     private boolean isPlayer1 = true;
     private static boolean isSinglePlayer = false;
-    private final ImageIcon singX = new ImageIcon("src\\Graphics\\signX.png");
-    private final ImageIcon singO = new ImageIcon("src\\Graphics\\signO.png");
+//    private final ImageIcon singX = new ImageIcon("res\\signX.png");
+//    private final ImageIcon singO = new ImageIcon("res\\signO.png");
+    private final ImageIcon singX = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("signX.png")));
+    private final ImageIcon singO = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("signO.png")));
+
+//    URL url1 = this.getClass().getResource("src\\Graphics\\signX.png");
+//    URL url2 = this.getClass().getResource("src\\Graphics\\signO.png");
+////    Image singX = Toolkit.getDefaultToolkit().getImage(url1);
+//    private ImageIcon singX;
+//
+//    {
+//        try {
+//            singX = Toolkit.getDefaultToolkit().getImage(url1.getContent());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    private final ImageIcon singO = new ImageIcon(url2);
+//private final ImageIcon singX = new ImageIcon(Toolkit.getDefaultToolkit().getImage(url1).getSource().toString());
+//private final ImageIcon singX = new ImageIcon(url1.getPath());
+//private final ImageIcon singX = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("..\\Graphics\\signX.png")));
+//Image singX1 = Toolkit.getDefaultToolkit().getImage(url1);
+//    private final ImageIcon singX = new ImageIcon(singX1);
+//    Image image;
+//
+//    {
+//        try {
+//            image = ImageIO.read(new File("src\\Graphics\\signX.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    private final ImageIcon singX = new ImageIcon(image);
+//Toolkit t = Toolkit.getDefaultToolkit();
+//Image i = t.getImage("resources\\Graphics\\signX.png");
+//    private ImageIcon singX = new ImageIcon(i);
+//    URL url1 = TicTacToeMain.class.getResource("resources\\Graphics\\signX.png"); // getClass().getClassLoader().getResource("signX.png");
+//    Image singX1 = Toolkit.getDefaultToolkit().getImage(url1);
+//    Image singX1 = Toolkit.getDefaultToolkit().createImage(TicTacToeMain.class.getResource("/res/signX.png"));
+//    Image singX1;
+//
+//    {
+//        try {
+//            singX1 = ImageIO.read(getClass().getResource("/res/signX.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    private ImageIcon singX = new ImageIcon(singX1);
+//private ImageIcon singX = new ImageIcon(getClass().getClassLoader().getResource("signX.png"));
+
 
     BoardPanel(){
         this.setBackground(Color.BLUE);
@@ -53,6 +108,7 @@ public class BoardPanel extends JPanel {
         for (JButton button : buttons) {
             button.addActionListener(this::buttonAction);
             button.setFocusable(false);
+            button.setFont(new Font(null, Font.PLAIN, 50));
             this.add(button);
         }
     }
@@ -104,7 +160,7 @@ public class BoardPanel extends JPanel {
             CustomPair customPair = TicTacToeAI.bestMove();
             JButton findButton = this.findButton(customPair.getRow(), customPair.getColumn());
             findButton.setEnabled(false);
-//            findButton.setText("o");
+            findButton.setText("o");
             findButton.setIcon(singO);
             GameBoard.getInstance().setGameBoard(customPair.getRow(), customPair.getColumn(), "o");
         }
