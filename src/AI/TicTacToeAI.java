@@ -6,7 +6,7 @@ import Game.GameStatus;
 import java.util.Arrays;
 
 public class TicTacToeAI {
-
+    static int count =0;
     public static CustomPair bestMove(){
         GameBoard gameBoard = GameBoard.getInstance();
         CustomPair move = null;
@@ -20,7 +20,7 @@ public class TicTacToeAI {
                 if (gameBoard.getGameBoard()[i][j].equals("")){
 //                    System.out.println("GameBoard.getInstance().getGameBoard()[i][j].equals(\"\")");
                     gameBoard.setGameBoard(i, j, "o");
-                    int score = minimax(gameBoard, 0, false);
+                    int score = minimax(gameBoard, 0, true);
                     System.out.println("if i: " + i + " j: " + j);
                     System.out.println("score: " + score + " bestscore: " + bestScore);
 //                    System.out.println(Arrays.deepToString(gameBoard.getGameBoard()));
@@ -29,8 +29,9 @@ public class TicTacToeAI {
                     gameBoard.setGameBoard(i, j, "");
                     if (score < bestScore){
 //                        System.out.println("score > bestScore");
-                        bestScore =score;
+                        bestScore = score;
                         move = new CustomPair(i,j);
+                        System.out.println("best score: " + bestScore);
 //                        break outerLoop;
                     }
                 }
@@ -39,6 +40,7 @@ public class TicTacToeAI {
 //        System.out.println("*************");
 //        System.out.println(move.toString());
         System.out.println("move: (" + move.getRow() + ", " + move.getColumn() + ")" );
+        System.out.println("count = " + count);
         return move;
     }
 
@@ -50,11 +52,12 @@ public class TicTacToeAI {
     GameStatus gameStatus = GameBoard.getInstance().resultsOfGame();
 
     private static int minimax(GameBoard gameBoard, int depth, boolean isMaximizing){
+        count += 1;
         if (!gameBoard.resultsOfGame().equals(GameStatus.ONGOING)) {
 //            System.out.println("!gameBoard.resultsOfGame().equals(GameStatus.ONGOING)");
             return switch (gameBoard.resultsOfGame()) {
-                case PLAYER1WIN -> 100;
-                case PLAYER2WIN -> -100;
+                case PLAYER1WIN -> 10;
+                case PLAYER2WIN -> -10;
                 case TIE -> 0;
                 default -> throw new IllegalStateException("Unexpected value: " + gameBoard.resultsOfGame());
             };
@@ -86,8 +89,9 @@ public class TicTacToeAI {
             for (int i = 0; i < gameBoard.getGameBoard().length; i++){
                 for (int j = 0; j < gameBoard.getGameBoard()[i].length; j++){
                     if (gameBoard.getGameBoard()[i][j].equals("")){
-                        gameBoard.setGameBoard(i, j, "o");
+                        gameBoard.setGameBoard(i, j, "x");
                         int score = minimax(gameBoard, depth + 1, false);
+                        score -= depth;
 //                        System.out.println(Arrays.deepToString(gameBoard.getGameBoard()));
                         gameBoard.setGameBoard(i, j, "");
 //                        System.out.println("if i: " + i + " j: " + j);
@@ -108,8 +112,9 @@ public class TicTacToeAI {
             for (int i = 0; i < GameBoard.getInstance().getGameBoard().length; i++){
                 for (int j = 0; j < GameBoard.getInstance().getGameBoard()[i].length; j++){
                     if (gameBoard.getGameBoard()[i][j].equals("")){
-                        gameBoard.setGameBoard(i, j, "x");
+                        gameBoard.setGameBoard(i, j, "o");
                         int score = minimax(gameBoard, depth + 1, true);
+                        score += depth;
 //                        System.out.println(Arrays.deepToString(gameBoard.getGameBoard()));
                         gameBoard.setGameBoard(i, j, "");
 //                        System.out.println("else i: " + i + " j: " + j);
