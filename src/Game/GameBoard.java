@@ -32,7 +32,6 @@ public class GameBoard {
         gameBoard[row][column] = playerSing;
     }
 
-    @SuppressWarnings("unused")
     public String[][] getGameBoard(){
         return gameBoard;
     }

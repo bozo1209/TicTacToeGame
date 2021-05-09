@@ -7,4 +7,4 @@
 
 ##### in the preparation:
 - save, load game
-- ai as second player
+- ai as second player (ready 9.05.21)
