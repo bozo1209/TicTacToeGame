@@ -1,8 +1,6 @@
 package GUI;
 
 import Game.GameBoard;
-import Main.TicTacToeMain;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -32,8 +30,7 @@ public class TitlePanel extends JPanel {
 
     private static void newGameButtonAction(){
         GameBoard.getInstance().setGameBoardInstanceToNull();
-        TicTacToeMain.gameFrame.dispose();
-        TicTacToeMain.gameFrame = new GameFrame();
+        GameFrame.newGameFrame();
         setGameName(gameName);
     }
 }

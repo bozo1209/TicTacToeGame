@@ -3,8 +3,11 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
+import static Main.TicTacToeMain.gameFrame;
+
 public class GameFrame extends JFrame {
 
+    private static BoardPanel boardPanel = new BoardPanel();
 
     public GameFrame(){
 
@@ -14,9 +17,16 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
 
         this.add(new TitlePanel(), BorderLayout.NORTH);
-        this.add(new BoardPanel(), BorderLayout.CENTER);
+        this.add(boardPanel, BorderLayout.CENTER);
 
         this.setVisible(true);
+    }
+
+    public static void newGameFrame(){
+        gameFrame.remove(boardPanel);
+        boardPanel = new BoardPanel();
+        gameFrame.add(boardPanel);
+        SwingUtilities.updateComponentTreeUI(gameFrame);
     }
 
 }
