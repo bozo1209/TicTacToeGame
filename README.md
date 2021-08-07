@@ -1,6 +1,7 @@
 # TicTacToeGame
 
 > Tic tac toe game using Java.
+> Game demo can be download from https://github.com/bozo1209/TicTacToeGame/blob/master/exeFile/TicTacToeJava.exe
 
 ## Table of Contents
 * [General Information](#general-information)
